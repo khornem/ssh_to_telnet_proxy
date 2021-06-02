@@ -40,7 +40,6 @@ TELNET_LOGIN_STRINGS = [
 TELNET_PASSWORD_STRINGS = [ b"Password: ", b"password"]
 TELNET_LOGIN_TIMEOUT = 5
 SSH_KEY = "test_rsa.key"
-LOGFILE = "ssh_to_telnet_proxy.log"
 
 # TELNET TERMINAL ESCAPE CHARACTERS
 TELNET_ESCAPE_REGEXP = r'(\x1b\[\d+;\d+\S|\x1b\[\?\d+\S|\x1b\[\d+\S|\x1bE)+'
@@ -279,8 +278,9 @@ def load_arguments():
                         help="Print version")
     parser.add_argument('-k', '--key', dest='key', required=False, type=str, default=SSH_KEY,
                         help="ssh private key that will be used by the server")
-    parser.add_argument('-f', '--logfile', dest='logfile', required=False, type=str, default=LOGFILE,
+    parser.add_argument('-f', '--logfile', dest='logfile', required=False, default=None,
                         help="paramiko logfile")
+
 
 
     # Parse arguments
@@ -316,7 +316,8 @@ def main():
                             '%(message)s')
 
     # setup paramiko local logging
-    paramiko.util.log_to_file(args.logfile)
+    if args.logfile:
+        paramiko.util.log_to_file(args.logfile)
     # Define server key
     host_key = paramiko.RSAKey(filename=args.key)
 
