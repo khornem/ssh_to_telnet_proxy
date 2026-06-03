@@ -31,6 +31,8 @@ LISTEN_PORT = 2200
 TELNET_LOGIN_STRINGS = [
     b"Username: ", 
     b"UserName: ",
+    b"Username:", 
+    b"UserName:",
     b"login: ",
     b"Login: ",
     b" name:",
